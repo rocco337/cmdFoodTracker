@@ -26,8 +26,7 @@ Show aggregation of consumed nutritients every day. By default load last 7 days 
 When looking in log load intakes for todaya and if date provided than load intakes for given day.
 
 ####5. Statistics
-####6. Trello sync
-####7. Refactor and todo notes
+####6. Refactor and todo notes
 * remove unused
 * create mapping for nutritionTable to model
 * do renaming
