@@ -2,6 +2,7 @@ import pickledb
 import jsonpickle
 import json
 import os
+import models
 
 class nutritionTableRepository:
     def __init__(self): 
@@ -18,7 +19,7 @@ class nutritionTableRepository:
         if searchTerm in self.cache:
             return self.cache[searchTerm]
         else:
-            result = [s for s in self.data if self._contains(searchTerm.lower(),s['Shrt_Desc'].lower()) or str(s['NDB_No']) == searchTerm ][:20]
+            result = [models.ingridientModel().mapFromDict(s) for s in self.data if self._contains(searchTerm.lower(),s['Shrt_Desc'].lower()) or str(s['NDB_No']) == searchTerm ][:40]
             self.cache[searchTerm] = result
             return result
     
@@ -26,14 +27,14 @@ class nutritionTableRepository:
         if reference in self.cache:
             return self.cache[reference][0]
         else:
-            result = [s for s in self.data if s['NDB_No'] == reference ]
+            result = [models.ingridientModel().mapFromDict(s) for s in self.data if s['NDB_No'] == reference ]
             self.cache[reference] = result
             return result[0] if result else None
             
     def searchByReferences(self,references):
         result =[]
         for reference in references:  
-            result = result + [s for s in self.data if s['NDB_No'] == reference ]
+            result = result + [models.ingridientModel().mapFromDict(s) for s in self.data if s['NDB_No'] == reference ]
             
         return result
         

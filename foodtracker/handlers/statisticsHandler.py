@@ -14,22 +14,23 @@ class statisticsHandler:
         today = datetime.date.today()
         weekAgo = today - datetime.timedelta(days=7)
         
-        ingridients = self.repository.getIntakeListDateRangeFilter(weekAgo,today)
+        intakes = self.repository.getIntakeListDateRangeFilter(weekAgo,today)
         statistics = collections.OrderedDict()
-        for i in ingridients:
+        for i in intakes:
             date = i.timestamp.date()
             if date not in statistics:
                 statistics[date] = dailiyStats(date)
             
             ingridient = self.nutritionTable.searchByReference(i.ingridientReference)
+            quantity =(i.amount/float(100))
             
-            statistics[date].kcalTotal += ingridient['Energ_Kcal']
-            statistics[date].proteinTotal += ingridient['Protein']
-            statistics[date].carboTotal += ingridient['Carbohydrt']
-            statistics[date].fatTotal += ingridient['Lipd_Tot']
+            statistics[date].kcalTotal += int(ingridient.kcal*quantity)
+            statistics[date].proteinTotal += int(ingridient.protein*quantity)
+            statistics[date].carboTotal += int(ingridient.carbo*quantity)
+            statistics[date].fatTotal += int(ingridient.fat*quantity)
         
         statistics=handlersCommon.reverseDict(statistics)
-        print tabulate(statistics.values(),headers=["Date","Kcal","P","C","F"])
+        print tabulate(statistics.values(),headers=["Date","Kcal","P","C","F"],tablefmt='orgtbl',numalign="right")
         
 class dailiyStats:
     def __init__(self,date):
