@@ -28,7 +28,6 @@ class intakeHandler:
             if date:
                 date = parse(date)
             
-            print date   
             self.ingirident = ingridientModel(ingridients[0]['NDB_No'],amount,date)
             self.repository.addIngridient(self.ingirident)
         else:
@@ -69,7 +68,8 @@ class intakeHandler:
     
     def formatIngridientForPrint(self,i,grams):
         fat = handlersCommon.getTotalFatCount(i)
-        quantity = grams/100
+        quantity = grams/float(100)
+        
         return [i['Shrt_Desc'],i['Energ_Kcal']*quantity,i['Protein']*quantity,i['Carbohydrt']*quantity,i['Lipd_Tot']*quantity,grams]
         
 class ingridientModel:

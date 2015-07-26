@@ -1,7 +1,8 @@
 from repositories.intakeRepository import intakeRepository
 from repositories.nutritionTableRepository import nutritionTableRepository
-import datetime,itertools 
+import datetime,itertools,collections
 from tabulate import tabulate
+import handlersCommon
 
 class statisticsHandler:
     def __init__(self):
@@ -14,7 +15,7 @@ class statisticsHandler:
         weekAgo = today - datetime.timedelta(days=7)
         
         ingridients = self.repository.getIntakeListDateRangeFilter(weekAgo,today)
-        statistics = {}
+        statistics = collections.OrderedDict()
         for i in ingridients:
             date = i.timestamp.date()
             if date not in statistics:
@@ -27,6 +28,7 @@ class statisticsHandler:
             statistics[date].carboTotal += ingridient['Carbohydrt']
             statistics[date].fatTotal += ingridient['Lipd_Tot']
         
+        statistics=handlersCommon.reverseDict(statistics)
         print tabulate(statistics.values(),headers=["Date","Kcal","P","C","F"])
         
 class dailiyStats:
