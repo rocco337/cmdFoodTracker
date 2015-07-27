@@ -46,6 +46,7 @@ class intakeRepository:
         result = []
         for item in self.db.lgetall("ingridients"):
                 item =jsonpickle.decode(item)
+                
                 if item.timestamp.date() == date:
                     result.append(item)   
         return result

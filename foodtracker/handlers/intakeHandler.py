@@ -1,11 +1,9 @@
-import datetime,readline
 from dateutil.parser import parse
-
 from repositories.intakeRepository import intakeRepository
 from repositories.nutritionTableRepository import nutritionTableRepository
+from repositories.models import intakeModel
 from tabulate import tabulate
-import handlersCommon
-import json
+import handlersCommon,datetime,readline,json
 
 class intakeHandler:
     def __init__(self):
@@ -29,7 +27,7 @@ class intakeHandler:
             if date:
                 date = parse(date)
             
-            self.ingirident = ingridientModel(ingridient.reference,amount,date)
+            self.ingirident = intakeModel(ingridient.reference,amount,date)
             self.repository.addIngridient(self.ingirident)
         else:
            print 'No ingridient ' + ingridientName + ' found!'
@@ -61,13 +59,5 @@ class intakeHandler:
         ingridients = self.nutritionTable.search(searchTerm)
         return [str(i.description).lower() for i in ingridients]
       
-class ingridientModel:
-    def __init__(self,ingridientReference,amount,time):
-        self.ingridientReference=ingridientReference
-        self.amount=amount
-        
-        if not time:
-            time = datetime.datetime.utcnow()
-        
-        self.timestamp = time
+
        

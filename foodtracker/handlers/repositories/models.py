@@ -1,3 +1,5 @@
+import datetime
+
 class ingridientModel():
     
     def __init__(self):
@@ -30,3 +32,12 @@ class ingridientModel():
                 self.carbo*quantity,
                 self.fat*quantity]
        
+class intakeModel():
+    def __init__(self,ingridientReference,amount,time):
+        self.ingridientReference=ingridientReference
+        self.amount=amount
+        
+        if not time:
+            time = datetime.datetime.utcnow()
+        
+        self.timestamp = time
