@@ -28,7 +28,7 @@ class intakeHandler:
                 date = parse(date)
             
             self.ingirident = intakeModel(ingridient.reference,amount,date)
-            self.repository.addIngridient(self.ingirident)
+            self.repository.addIntake(self.ingirident)
         else:
            print 'No ingridient ' + ingridientName + ' found!'
        
@@ -52,7 +52,7 @@ class intakeHandler:
         print tabulate(ingridients,headers=["Description","Kcal","Protein","Carbo","Fat"],tablefmt='orgtbl',numalign="right")
     
     def removeLast(self):
-        self.repository.removeLastIngridient()
+        self.repository.removeLastIntake()
         self.showIntake(None)
     
     def getSimilarIngridients(self, searchTerm):
