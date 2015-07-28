@@ -30,7 +30,8 @@ class ingridientModel():
                 self.kcal*quantity,
                 self.protein*quantity,
                 self.carbo*quantity,
-                self.fat*quantity]
+                self.fat*quantity,
+                grams]
        
 class intakeModel():
     def __init__(self,ingridientReference,amount,time):

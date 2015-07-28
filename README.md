@@ -27,8 +27,6 @@ When looking in log load intakes for todaya and if date provided than load intak
 
 ####5. Statistics
 ####6. Refactor and todo notes
-* remove unused
-* create mapping for nutritionTable to model
-* do renaming
 * add fibers and split fats
 * http://missionripped.com/tools/daily-caloric-calculator/
+* added autocomplete for date - yesterday and dates for 10 days in back

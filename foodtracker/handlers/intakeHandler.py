@@ -49,7 +49,7 @@ class intakeHandler:
             ingridients.append(ingridient.formatForLogPrint(i.amount))
         
        
-        print tabulate(ingridients,headers=["Description","Kcal","Protein","Carbo","Fat"],tablefmt='orgtbl',numalign="right")
+        print tabulate(ingridients,headers=["Description","Kcal","Protein","Carbo","Fat","Grams"],tablefmt='orgtbl',numalign="right")
     
     def removeLast(self):
         self.repository.removeLastIntake()
