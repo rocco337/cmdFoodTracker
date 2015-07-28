@@ -29,7 +29,7 @@ class statisticsHandler:
             statistics[date].carboTotal += int(ingridient.carbo*quantity)
             statistics[date].fatTotal += int(ingridient.fat*quantity)
         
-        statistics=handlersCommon.reverseDict(statistics)
+        #statistics=handlersCommon.reverseDict(statistics)
         print tabulate(statistics.values(),headers=["Date","Kcal","P","C","F"],tablefmt='orgtbl',numalign="right")
         
 class dailiyStats:

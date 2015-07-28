@@ -29,4 +29,3 @@ When looking in log load intakes for todaya and if date provided than load intak
 ####6. Refactor and todo notes
 * add fibers and split fats
 * http://missionripped.com/tools/daily-caloric-calculator/
-* added autocomplete for date - yesterday and dates for 10 days in back

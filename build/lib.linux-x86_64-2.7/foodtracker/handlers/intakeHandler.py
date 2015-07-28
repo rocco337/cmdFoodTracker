@@ -22,6 +22,8 @@ class intakeHandler:
             measure = ingridient.description + ': ' + str(ingridient.measureDesc) + ' grams'
             amount = input('[' + measure + '] ' +'Quantity in grams:')
             
+            readline.set_completer(self.getDateAutocomplete)
+            readline.parse_and_bind("tab: complete")
             date = raw_input("Date(dd-mm-yyyy - skip to use today date): ")
             
             if date:
@@ -49,7 +51,7 @@ class intakeHandler:
             ingridients.append(ingridient.formatForLogPrint(i.amount))
         
        
-        print tabulate(ingridients,headers=["Description","Kcal","Protein","Carbo","Fat"],tablefmt='orgtbl',numalign="right")
+        print tabulate(ingridients,headers=["Description","Kcal","Protein","Carbo","Fat","Grams"],tablefmt='orgtbl',numalign="right")
     
     def removeLast(self):
         self.repository.removeLastIntake()
@@ -58,6 +60,11 @@ class intakeHandler:
     def getSimilarIngridients(self, searchTerm):
         ingridients = self.nutritionTable.search(searchTerm)
         return [str(i.description).lower() for i in ingridients]
-      
+    
+    def getDateAutocomplete(self,text, state):
+        base = datetime.datetime.today()
+        date_list = [(base - datetime.timedelta(days=x)).date().strftime('%d.%m') for x in range(0, 7)]
+            
+        return date_list[state]
 
        
