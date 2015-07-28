@@ -28,4 +28,3 @@ When looking in log load intakes for todaya and if date provided than load intak
 ####5. Statistics
 ####6. Refactor and todo notes
 * add fibers and split fats
-* http://missionripped.com/tools/daily-caloric-calculator/
