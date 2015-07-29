@@ -1,9 +1,10 @@
+from itertools import groupby
 from dateutil.parser import parse
 from repositories.intakeRepository import intakeRepository
 from repositories.nutritionTableRepository import nutritionTableRepository
 from repositories.models import intakeModel
 from tabulate import tabulate
-import handlersCommon,datetime,readline,json
+import handlersCommon,datetime,readline,json,collections
 
 class intakeHandler:
     def __init__(self):
@@ -32,7 +33,7 @@ class intakeHandler:
             self.ingirident = intakeModel(ingridient.reference,amount,date)
             self.repository.addIntake(self.ingirident)
         else:
-           print 'No ingridient ' + ingridientName + ' found!'
+           print ("No ingridient " + ingridientName + " found!")
        
     def showIntake(self,date):
         if not date:
@@ -42,7 +43,7 @@ class intakeHandler:
             
         self.ingiridents = self.repository.getIntakeByDate(date)
         if not self.ingiridents:
-            print "No intakes were found for date " + str(date) + "."
+            print ("No intakes were found for date " + str(date) + ".")
             return
         
         ingridients=[]
@@ -51,7 +52,7 @@ class intakeHandler:
             ingridients.append(ingridient.formatForLogPrint(i.amount))
         
        
-        print tabulate(ingridients,headers=["Description","Kcal","Protein","Carbo","Fat","Grams"],tablefmt='orgtbl',numalign="right")
+        print (tabulate(ingridients,headers=["Description","Kcal","Protein","Carbo","Fat","Grams"],tablefmt='orgtbl',numalign="right"))
     
     def removeLast(self):
         self.repository.removeLastIntake()
@@ -67,4 +68,25 @@ class intakeHandler:
             
         return date_list[state]
 
-       
+    def export(self,path):
+        intakes = self.repository.getIntakes()
+        
+        statistics = collections.OrderedDict()
+        for i in sorted(intakes, key=lambda x: x.timestamp.date(),reverse=True):
+            date = i.timestamp.date()
+            if date not in statistics:
+                statistics[date] = []
+            
+            ingridient = self.nutritionTable.searchByReference(i.ingridientReference)
+            statistics[date].append(ingridient.formatForLogPrint(i.amount))
+        
+        result=""    
+        for k in statistics.keys():
+            result +='\n\n'   
+            result += 'Intake for day: ' + str(k) + '\n'
+            result += tabulate(statistics[k],headers=["Description","Kcal","Protein","Carbo","Fat","Grams"],tablefmt='orgtbl',numalign="right")
+            result +='\n'   
+            
+        path +='foodtrackerExport.txt'
+        with open(path, 'w') as the_file: the_file.write(result)
+        print ('Printed to file ' + path)

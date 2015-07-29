@@ -20,6 +20,7 @@ class main:
         self.parser.add_argument('-l','--log', help="Show intake log by date - format dd-mm-yyyy (default date is today)", dest='logDate', action='store',const=str(datetime.date.today()),nargs='?')
         self.parser.add_argument('-s','--stats', action='store_true', dest='isStatistics', default=False, help='Show intake statistics for last 7 days')
         self.parser.add_argument('-r','--remove', action='store_true', dest='isRemoveLast', default=False, help='Remove last item')
+        self.parser.add_argument('-e','-export', action='store', dest='exportPath', help='Export daily intake to file')
         
         argcomplete.autocomplete(self.parser)
         self.args = self.parser.parse_args()
@@ -46,6 +47,8 @@ class main:
             self.intakeHandler.removeLast()
         elif self.args.isStatistics:
             self.statisticsHandler.showLast7daysStats()
+        elif self.args.exportPath:
+            self.intakeHandler.export(self.args.exportPath)
         else:
             self.parser.print_help()
 
