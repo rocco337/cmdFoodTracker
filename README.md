@@ -12,5 +12,7 @@ Look at you daily log retrospectively and find out daily consumation sum.
     '>foodtracker -a' add consumation. type for instance 'chciken breast ckd' and press tab to see all possible entries
     '>foodtracker -l' show daily log or add date after to look at log for specific date
     '>foodtracker -s' show daily statistics
-    '>foodtracker' -r remove last entry
+    '>foodtracker -r' remove last entry
+    '>foodtracker -e path' export intake list to file. Provide path where file should be stored
+    
 
