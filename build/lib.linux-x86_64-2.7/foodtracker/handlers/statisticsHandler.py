@@ -16,7 +16,7 @@ class statisticsHandler:
         
         intakes = self.repository.getIntakeListDateRangeFilter(weekAgo,today)
         statistics = collections.OrderedDict()
-        for i in intakes:
+        for i in sorted(intakes, key=lambda x: x.timestamp.date(),reverse=True):
             date = i.timestamp.date()
             if date not in statistics:
                 statistics[date] = dailiyStats(date)
@@ -29,7 +29,6 @@ class statisticsHandler:
             statistics[date].carboTotal += int(ingridient.carbo*quantity)
             statistics[date].fatTotal += int(ingridient.fat*quantity)
         
-        #statistics=handlersCommon.reverseDict(statistics)
         print tabulate(statistics.values(),headers=["Date","Kcal","P","C","F"],tablefmt='orgtbl',numalign="right")
         
 class dailiyStats:
